@@ -210,7 +210,8 @@ function edit_credentials($user_id, $email, $password)
     ]);
 }
 
-function set_new_status($user_id, $status){
+function set_new_status($user_id, $status)
+{
     $pdo = new PDO("mysql:host=localhost;dbname=my_project", "root", "root");
     $sql = "UPDATE `users` SET  status =:status   WHERE id=:id";
     $statement = $pdo->prepare($sql);
@@ -220,7 +221,27 @@ function set_new_status($user_id, $status){
     ]);
 }
 
-function has_image($user_id, $image){
+//function has_image($user_id, $image){
+//   обошелся без данной простой проверкой !!!!!!!!
+//}
 
+function delete($user_id)
+{
+    // DELETE изображение
+    $pdo = new PDO("mysql:host=localhost;dbname=my_project", "root", "root");
+    $sql = "SELECT * FROM users WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["id" => $user_id]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    $dir = 'img/demo/avatars/';
+    $img_name = $user['avatar'];
+    unlink($dir.$img_name);
+
+    // удаление из бд
+    $pdo = new PDO("mysql:host=localhost;dbname=my_project", "root", "root");
+    $sql = "DELETE FROM `users` WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $result = $statement->execute([
+        "id" => $user_id
+    ]);
 }
-

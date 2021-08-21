@@ -101,8 +101,6 @@ $users = select_all_users();
                                                 style="background-image:url('img/demo/avatars/avatar.jpg'); background-size: cover;"></span>
                                       <?php endif; ?>
 
-
-
                                 </span>
 
                             <?php if (is_admin($user_session)): ?>
