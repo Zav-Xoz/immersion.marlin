@@ -209,3 +209,13 @@ function edit_credentials($user_id, $email, $password)
         "id" => $user_id
     ]);
 }
+
+function set_new_status($user_id, $status){
+    $pdo = new PDO("mysql:host=localhost;dbname=my_project", "root", "root");
+    $sql = "UPDATE `users` SET  status =:status   WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $result = $statement->execute([
+        "status" => $status,
+        "id" => $user_id
+    ]);
+}
