@@ -28,8 +28,8 @@ $users = select_all_users();
 <body class="mod-bg-1 mod-nav-link">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
     <a class="navbar-brand d-flex align-items-center fw-500" href="users.php"><img alt="logo"
-                                                                                    class="d-inline-block align-top mr-2"
-                                                                                    src="img/logo.png"> Учебный
+                                                                                   class="d-inline-block align-top mr-2"
+                                                                                   src="img/logo.png"> Учебный
         проект</a>
     <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span>
@@ -85,7 +85,7 @@ $users = select_all_users();
 
     <div class="row" id="js-contacts">
 
-        <?php foreach ($users as   $value): ?>
+        <?php foreach ($users as $value): ?>
 
             <div class="col-xl-4">
                 <div id="c_<?php echo $value['id'] ?>" class="card border shadow-0 mb-g shadow-sm-hover"
@@ -93,46 +93,54 @@ $users = select_all_users();
                     <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                         <div class="d-flex flex-row align-items-center">
                                 <span class="status status-<?php echo $value['status'] ?> mr-3">
-                                    <span class="rounded-circle profile-image d-block "
-                                          style="background-image:url('img/demo/avatars/<?php echo $value['avatar'] ?>'); background-size: cover;"></span>
+                                      <?php if($value['avatar']): ?>
+                                          <span class="rounded-circle profile-image d-block "
+                                                style="background-image:url('img/demo/avatars/<?php echo $value['avatar'] ?>'); background-size: cover;"></span>
+                                      <?php else:?>
+                                          <span class="rounded-circle profile-image d-block "
+                                                style="background-image:url('img/demo/avatars/avatar.jpg'); background-size: cover;"></span>
+                                      <?php endif; ?>
+
+
+
                                 </span>
 
                             <?php if (is_admin($user_session)): ?>
-                            <div class="info-card-text flex-1">
-                                <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info"
-                                   data-toggle="dropdown" aria-expanded="false">
-                                    <?php echo $value['name'] ?>
-                                    <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
-                                    <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="edit.php?id=<?php echo $value['id'] ?>">
-                                        <i class="fa fa-edit"></i>
-                                        Редактировать</a>
-                                    <a class="dropdown-item" href="security.php?id=<?php echo $value['id'] ?>">
-                                        <i class="fa fa-lock"></i>
-                                        Безопасность</a>
-                                    <a class="dropdown-item" href="status.php?id=<?php echo $value['id'] ?>">
-                                        <i class="fa fa-sun"></i>
-                                        Установить статус</a>
-                                    <a class="dropdown-item" href="media.php?id=<?php echo $value['id'] ?>">
-                                        <i class="fa fa-camera"></i>
-                                        Загрузить аватар
+                                <div class="info-card-text flex-1">
+                                    <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info"
+                                       data-toggle="dropdown" aria-expanded="false">
+                                        <?php echo $value['name'] ?>
+                                        <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
+                                        <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                                     </a>
-                                    <a href="delete.php?id=<?php echo $value['id'] ?>" class="dropdown-item"
-                                       onclick="return confirm('are you sure?');">
-                                        <i class="fa fa-window-close"></i>
-                                        Удалить
-                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="edit.php?id=<?php echo $value['id'] ?>">
+                                            <i class="fa fa-edit"></i>
+                                            Редактировать</a>
+                                        <a class="dropdown-item" href="security.php?id=<?php echo $value['id'] ?>">
+                                            <i class="fa fa-lock"></i>
+                                            Безопасность</a>
+                                        <a class="dropdown-item" href="status.php?id=<?php echo $value['id'] ?>">
+                                            <i class="fa fa-sun"></i>
+                                            Установить статус</a>
+                                        <a class="dropdown-item" href="media.php?id=<?php echo $value['id'] ?>">
+                                            <i class="fa fa-camera"></i>
+                                            Загрузить аватар
+                                        </a>
+                                        <a href="delete.php?id=<?php echo $value['id'] ?>" class="dropdown-item"
+                                           onclick="return confirm('are you sure?');">
+                                            <i class="fa fa-window-close"></i>
+                                            Удалить
+                                        </a>
+                                    </div>
+                                    <span class="text-truncate text-truncate-xl"><?php echo $value['position'] ?></span>
                                 </div>
-                                <span class="text-truncate text-truncate-xl"><?php echo $value['position'] ?></span>
-                            </div>
-                            <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse"
-                                    data-target="#c_<?php echo $value['id'] ?> > .card-body + .card-body"
-                                    aria-expanded="false">
-                                <span class="collapsed-hidden">+</span>
-                                <span class="collapsed-reveal">-</span>
-                            </button>
+                                <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse"
+                                        data-target="#c_<?php echo $value['id'] ?> > .card-body + .card-body"
+                                        aria-expanded="false">
+                                    <span class="collapsed-hidden">+</span>
+                                    <span class="collapsed-reveal">-</span>
+                                </button>
 
 
                             <?php elseif ($myId['id'] == $value['id']): ?>
@@ -176,7 +184,8 @@ $users = select_all_users();
                             <?php else: ?>
 
                                 <div class="info-card-text flex-1">
-                                    <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info">
+                                    <a href="javascript:void(0);"
+                                       class="fs-xl text-truncate text-truncate-lg text-info">
                                         <?php echo $value['name'] ?>
 
                                     </a>
@@ -205,13 +214,16 @@ $users = select_all_users();
                                 <i class="fas fa-map-pin mr-2"></i> <?php echo $value['address'] ?>
                             </address>
                             <div class="d-flex flex-row">
-                                <a href="https://<?php echo $value['vk']; ?>" target="_blank" class="mr-2 fs-xxl" style="color:#4680C2">
+                                <a href="https://<?php echo $value['vk']; ?>" target="_blank" class="mr-2 fs-xxl"
+                                   style="color:#4680C2">
                                     <i class="fab fa-vk"></i>
                                 </a>
-                                <a href="https://<?php echo $value['telegram']; ?>" target="_blank" class="mr-2 fs-xxl" style="color:#38A1F3">
+                                <a href="https://<?php echo $value['telegram']; ?>" target="_blank" class="mr-2 fs-xxl"
+                                   style="color:#38A1F3">
                                     <i class="fab fa-telegram"></i>
                                 </a>
-                                <a href="https://<?php echo $value['instagram']; ?>" target="_blank" class="mr-2 fs-xxl" style="color:#E1306C">
+                                <a href="https://<?php echo $value['instagram']; ?>" target="_blank" class="mr-2 fs-xxl"
+                                   style="color:#E1306C">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             </div>

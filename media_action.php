@@ -4,9 +4,9 @@ require "function.php";
 
 $user_edit_id = $_SESSION['edit_id']; //    получаем id юзера которого редактируем
 
-$select = $_POST['select'];
+$avatar = $_FILES['avatar'];
 
-set_new_status($user_edit_id, $select);
+if (avatar_security($avatar))  upload_avatar($user_edit_id, $avatar);
 
-set_flash_message('success', "STATUS успешно ОБНОВЛЕН!!!");
+set_flash_message('success', "AVATAR успешно ОБНОВЛЕН!!!");
 redirect_to("page_profile.php");

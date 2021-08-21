@@ -219,3 +219,8 @@ function set_new_status($user_id, $status){
         "id" => $user_id
     ]);
 }
+
+function has_image($user_id, $image){
+
+}
+

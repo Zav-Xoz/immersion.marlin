@@ -1,16 +1,15 @@
 <?php
 session_start();
 require "function.php";
-$user_session = $_SESSION["user"];
-$user_edit_id = $_GET['id'];
-$_SESSION['edit_id'] = $user_edit_id;          // юзера id в сессию
+$user_session = $_SESSION["user"];              // получаем юзера авторизованного
+$user_edit_id = $_GET['id'];                    //  получаем юзера от перехода по ссылке
+$_SESSION['edit_id'] = $user_edit_id;           // юзера id в сессию
+$output = get_email_by_id($user_edit_id);       // email редактируемого
+$edit_user_arr = get_user_by_email($output);    //получаем все данные редактируемого
 
-$output = get_email_by_id($user_edit_id);      // email редактируемого
-$edit_user_arr = get_user_by_email($output);  //получаем все данные редактируемого
+is_not_logged_in($user_session);                // Авторизирован ???
 
-is_not_logged_in($user_session);
-
-if (!is_admin($user_session)) {
+if (!is_admin($user_session)) {                // Не  АДМИН ???
 
     if ($edit_user_arr['id'] != $user_edit_id) {
         set_flash_message('danger', "Можно редактировать только свой профиль!");
